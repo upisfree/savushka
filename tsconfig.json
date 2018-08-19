@@ -1,0 +1,23 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "declaration": true,
+    "typeRoots" : ["node_modules/@types"],
+    "outDir": "bin/",
+    "sourceMap": true,
+    "target": "es6",
+    "module": "commonjs",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "types": ["node"],
+    "allowJs": false,
+    "strictNullChecks": true
+  },
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ],
+  "include": [
+    "src/*"
+  ]
+}

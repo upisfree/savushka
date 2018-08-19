@@ -1,0 +1,4 @@
+### build
+```bash
+tsc --build tsconfig.json
+```
