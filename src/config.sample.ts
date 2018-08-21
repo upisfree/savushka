@@ -4,6 +4,7 @@ export default {
     GROUP_TOKEN: 'abc123'
   },
   TELEGRAM: {
-
+    GROUP_URL: '@atRequired',
+    BOT_TOKEN: 'zyx987'
   }
 };
