@@ -31,7 +31,7 @@ namespace VK {
     }
 
     public onUpdates(updates, callback): void {
-      if (updates.length) {
+      if (updates && updates.length) {
         log('[vk]', 'updates received, count:', updates.length);
 
         for (let a = 0; a < updates.length; a++) {
