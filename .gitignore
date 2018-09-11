@@ -2,6 +2,7 @@
 bin/
 tmp/
 src/config.ts
+savushka.log
 .DS_Store
 
 # Logs

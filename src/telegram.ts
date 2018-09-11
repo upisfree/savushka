@@ -2,6 +2,7 @@ import https = require('https');
 import fs = require('fs');
 import TelegramBot = require('node-telegram-bot-api');
 import CONFIG from './config';
+import log from './log';
 
 class Telegram {
   private botInstance: TelegramBot;
@@ -12,7 +13,7 @@ class Telegram {
       polling: true
     });
 
-    console.log('telegram bot inited');
+    log('[tg]', 'bot inited');
   }
 
   // TODO: rewrite as Promise, not void

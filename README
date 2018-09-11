@@ -1,12 +1,12 @@
 # savushka
 VK to Telegram music transmitter for my younger brother.
 
-### Вuild
-```bash
-npm run dev
-```
-
 ### Run
 ```bash
 ./savushka
+```
+
+### Вuild
+```bash
+npm run dev
 ```
