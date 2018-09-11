@@ -16,26 +16,29 @@ class Telegram {
     log('[tg]', 'bot inited');
   }
 
-  // TODO: rewrite as Promise, not void
-  public getChannelId(callback): void {
-    this.botInstance.getChat(CONFIG.TELEGRAM.GROUP_URL).then((chat: TelegramBot.Chat) => {
-      this.channelId = chat.id;
+  public getChannelId(): Promise<number> {
+    return this.botInstance.getChat(CONFIG.TELEGRAM.GROUP_URL)
+      .catch((reason: any) => log('[tg]', 'getChannelId() failed with reason', reason))
+      .then((chat: TelegramBot.Chat) => {
+        log('[tg]', 'getChannelId() received id #', chat.id);
 
-      callback();
-    });
+        this.channelId = chat.id;
+
+        return this.channelId;
+      });
   }
 
   public sendUrlsToChannel(urls): void {
-    for (var i = 0; i < urls.length; i++) {
+    for (let i = 0; i < urls.length; i++) {
       let file = fs.createWriteStream('tmp/' + i + '.mp3');
       let get = https.get(urls[i], (res) => {
         res.pipe(file);
 
         // perfomance tip here: https://github.com/yagop/node-telegram-bot-api/blob/master/doc/usage.md#sending-files
         this.botInstance.sendAudio(this.channelId, res).then((m) => {
-          console.log('[telegram bot]: send audio');
+          console.log('[tg]', 'send audio');
         }, (e) => {
-          console.log(e);
+          log('[tg]', 'sendUrlsToChannel() failed:', e);
         });
       });
     };

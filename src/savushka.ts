@@ -4,13 +4,20 @@ import TelegramBot from './telegram';
 import VKBot from './vk';
 import log from './log';
 
-var telegramBot = new TelegramBot();
-var vkBot;
-
 log('SAVUSHKA STARTED');
 
-telegramBot.getChannelId(() => {
-  vkBot = new VKBot((urls) => {
-    telegramBot.sendUrlsToChannel(urls);
+var telegramBot = new TelegramBot();
+var vkBot = new VKBot();
+
+telegramBot.getChannelId()
+  .then(() => {
+    vkBot.setUpdatesCallback((urls) => {
+      telegramBot.sendUrlsToChannel(urls);
+    });
   });
-});
+
+// telegramBot.getChannelId(() => {
+//   vkBot = new VKBot((urls) => {
+//     telegramBot.sendUrlsToChannel(urls);
+//   });
+// });
