@@ -1,13 +1,12 @@
-import https = require('https');
 import CONFIG from './config';
-import TelegramBot from './telegram';
-import VKBot from './vk';
 import log from './log';
+import Telegram from './telegram';
+import VK from './vk';
 
 log('SAVUSHKA STARTED');
 
-var telegramBot = new TelegramBot();
-var vkBot = new VKBot();
+var telegramBot = new Telegram.Bot();
+var vkBot = new VK.Bot();
 
 telegramBot.getChannelId()
   .then(() => {
@@ -15,9 +14,3 @@ telegramBot.getChannelId()
       telegramBot.sendUrlsToChannel(urls);
     });
   });
-
-// telegramBot.getChannelId(() => {
-//   vkBot = new VKBot((urls) => {
-//     telegramBot.sendUrlsToChannel(urls);
-//   });
-// });

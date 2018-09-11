@@ -1,3 +1,5 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --no-deprecation
 
+// --no-deprecation из-за того что node-telegram-bot-api выдаёт предупреждения,
+// документация новая, а код ещё не зарелизили и по-новому сделать невозможно. поэтому так.
 require(__dirname + '/bin/savushka.js');
