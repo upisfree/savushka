@@ -1,12 +1,18 @@
 import fs = require('fs');
 import CONFIG from './config';
+import mkdir from './mkdir';
 
-var stream = fs.createWriteStream(CONFIG.LOGGING.FILENAME, {
+if (CONFIG.IS_LOGGING_ENABLED) {
+  mkdir('log');
+}
+
+let fileName = new Date().toISOString().split('.')[0].replace(/:/g, '-'); // remove milliseconds and replace : with - because Windows file name restrictions
+let stream = fs.createWriteStream(`log/${ fileName }.log`, {
   flags: 'a'
 });
 
 export default function(...messages) {
-  if (CONFIG.LOGGING.ENABLED) {
+  if (CONFIG.IS_LOGGING_ENABLED) {
     let d = new Date();
     let m = `[${ d.toUTCString() }] `;
 

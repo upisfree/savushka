@@ -6,7 +6,12 @@ VK to Telegram music transmitter for my younger brother.
 ./savushka
 ```
 
-### Вuild
+### Build
+```bash
+npm run build
+```
+
+### Dev
 ```bash
 npm run dev
 ```

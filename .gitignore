@@ -1,5 +1,6 @@
 ###
 bin/
+log/
 tmp/
 src/config.ts
 savushka.log

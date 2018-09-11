@@ -35,7 +35,6 @@ namespace VK {
         log('[vk]', 'updates received, count:', updates.length);
 
         for (let a = 0; a < updates.length; a++) {
-          // TODO: create type for this object
           let attachments = updates[a].object.attachments;
           let urls: Audio[] = [];
 
@@ -44,7 +43,7 @@ namespace VK {
           if (attachments) {
             for (let b = 0; b < attachments.length; b++) {
               if (attachments[b].audio) {
-                log('[vk]', 'got audio ' + attachments[b].audio.artist + ' — ' + attachments[b].audio.title);
+                log('[vk]', `got audio "${ attachments[b].audio.artist } — ${ attachments[b].audio.title }"`);
                 // console.log(attachments[b].audio);
 
                 if (attachments[b].audio.url) {

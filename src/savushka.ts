@@ -1,7 +1,12 @@
+import rimraf = require('rimraf');
 import CONFIG from './config';
 import log from './log';
+import mkdir from './mkdir';
 import Telegram from './telegram';
 import VK from './vk';
+
+rimraf.sync('tmp');
+mkdir('tmp');
 
 log('SAVUSHKA STARTED');
 

@@ -37,13 +37,24 @@ namespace Telegram {
         let get = https.get(urls[i].url, (res) => {
           res.pipe(file);
 
+          // TODO: указывать прогресс загрузки. Пока есть контроль только над скачиванием файла к себе,
+          //       над загрузкой в телегу контроля нет (его нужно вынести из библиотеки).
+          // let fullLength = parseInt(res.headers['content-length'] || '');
+          // let received = 0;
+
+          // res.on('data', (d) => {
+          //   received += d.length;
+
+          //   console.log(Math.round(received / fullLength * 100) + '%');
+          // });
+
           let fileOptions: TelegramBot.SendAudioOptions = {
             performer: urls[i].artist,
             title: urls[i].title,
           };
 
           this.botInstance.sendAudio(this.channelId, res, fileOptions).then((m) => {
-            console.log('[tg]', 'send audio');
+            log('[tg]', `send audio "${ urls[i].artist } — ${ urls[i].title }"`);
           }, (e) => {
             log('[tg]', 'sendUrlsToChannel() failed:', e);
           });
