@@ -1,5 +1,4 @@
 import https = require('https');
-import fs = require('fs');
 import CONFIG from './config';
 import TelegramBot from './telegram';
 import VKBot from './vk';

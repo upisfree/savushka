@@ -1,4 +1,12 @@
-### build
+# savushka
+VK to Telegram music transmitter for my younger brother.
+
+### Вuild
 ```bash
-tsc --build tsconfig.json
+npm run dev
+```
+
+### Run
+```bash
+./savushka
 ```
