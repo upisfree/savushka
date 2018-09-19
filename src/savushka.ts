@@ -13,9 +13,6 @@ log('SAVUSHKA STARTED');
 var telegramBot = new Telegram.Bot();
 var vkBot = new VK.Bot();
 
-telegramBot.getChannelId()
-  .then(() => {
-    vkBot.setUpdatesCallback((urls) => {
-      telegramBot.sendUrlsToChannel(urls);
-    });
-  });
+vkBot.setUpdatesCallback((urls) => {
+  telegramBot.sendUrlsToChannel(urls);
+});

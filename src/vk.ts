@@ -26,6 +26,7 @@ namespace VK {
 
     public setUpdatesCallback(callback): void {
       this.botInstance.getUpdates((updates) => {
+        console.log(updates);
         this.onUpdates(updates, callback);
       });
     }

@@ -17,7 +17,7 @@ export default function(...messages) {
     let m = `[${ d.toUTCString() }] `;
 
     for (let i = 0; i < messages.length; ++i) {
-      m += `${ messages[i].toString() } `;
+      m += `${ messages[i].toString() } `; // TODO: ну чёт здесь нихуя не пишутся ошибки
     }
 
     console.log(m);
