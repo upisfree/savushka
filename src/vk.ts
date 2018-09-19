@@ -1,4 +1,4 @@
-import { VKApi, ConsoleLogger, BotsLongPollUpdatesProvider } from 'node-vk-sdk';
+import VKBot = require('vk-node-sdk');
 import CONFIG from './config';
 import log from './log';
 
@@ -10,57 +10,44 @@ namespace VK {
   }
 
   export class Bot {
-    private api: VKApi;
-    private botInstance: BotsLongPollUpdatesProvider;
+    private api: any;
 
     constructor() {
-      this.api = new VKApi({
-        token: CONFIG.VK.GROUP_TOKEN,
-        logger: new ConsoleLogger()
-      });
-
-      this.botInstance = new BotsLongPollUpdatesProvider(this.api, CONFIG.VK.GROUP_ID);
+      this.api = new VKBot.Group(CONFIG.VK.GROUP_TOKEN);
 
       log('[vk]', 'bot inited');
     }
 
-    public setUpdatesCallback(callback): void {
-      this.botInstance.getUpdates((updates) => {
-        console.log(updates);
-        this.onUpdates(updates, callback);
-      });
-    }
-
-    public onUpdates(updates, callback): void {
-      if (updates && updates.length) {
-        log('[vk]', 'updates received, count:', updates.length);
-
-        for (let a = 0; a < updates.length; a++) {
-          let attachments = updates[a].object.attachments;
+    public onMessage(callback): void {
+      this.api.onMessage((message) => {
+        if (message.attachments.length) {
+          let attachments = message.attachments;
           let urls: Audio[] = [];
 
           log('[vk]', 'attachments count: ' + attachments.length);
 
-          if (attachments) {
-            for (let b = 0; b < attachments.length; b++) {
-              if (attachments[b].audio) {
-                log('[vk]', `got audio "${ attachments[b].audio.artist } — ${ attachments[b].audio.title }"`);
-                // console.log(attachments[b].audio);
+          for (let i = 0; i < attachments.length; i++) {
+            let attachment = attachments[i];
 
-                if (attachments[b].audio.url) {
+            switch (attachment.type) {
+              case 'audio':
+                log('[vk]', `got audio "${ attachment.audio.artist } — ${ attachment.audio.title }"`);
+
+                if (attachment.audio.url) {
                   urls.push({
-                    artist: attachments[b].audio.artist,
-                    title: attachments[b].audio.title,
-                    url: attachments[b].audio.url
+                    artist: attachment.audio.artist,
+                    title: attachment.audio.title,
+                    url: attachment.audio.url
                   } as Audio);
                 }
-              }
-            }
 
-            callback(urls);
+                break;
+            }
           }
+
+          callback(urls);
         }
-      }
+      });
     }
   }
 }
