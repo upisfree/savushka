@@ -21,15 +21,21 @@ namespace Telegram {
 
     public sendUrlsToChannel(urls: VK.Audio[]): void {
       for (let i = 0; i < urls.length; i++) {
-        let fileOptions: TelegramBot.SendAudioOptions = {
-          performer: urls[i].artist,
-          title: urls[i].title
-        };
+        let file = fs.createWriteStream('tmp/' + i + '.mp3');
 
-        this.botInstance.sendAudio(CONFIG.TELEGRAM.GROUP_URL, urls[i].url, fileOptions).then((m) => {
-          log('[tg]', `send audio "${ urls[i].artist } — ${ urls[i].title }"`);
-        }, (e) => {
-          log('[tg]', 'sendUrlsToChannel() failed:', e);
+        let get = https.get(urls[i].url, (res) => {
+          res.pipe(file);
+
+          let fileOptions: TelegramBot.SendAudioOptions = {
+            performer: urls[i].artist,
+            title: urls[i].title,
+          };
+
+          this.botInstance.sendAudio(CONFIG.TELEGRAM.GROUP_URL, res, fileOptions).then((m) => {
+            log('[tg]', `send audio "${ urls[i].artist } — ${ urls[i].title }"`);
+          }, (e) => {
+            log('[tg]', 'sendUrlsToChannel() failed:', e);
+          });
         });
       };
     }
