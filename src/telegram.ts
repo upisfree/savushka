@@ -21,7 +21,7 @@ namespace Telegram {
 
     public sendUrlsToChannel(urls: VK.Audio[]): void {
       for (let i = 0; i < urls.length; i++) {
-        let file = fs.createWriteStream('tmp/' + i + '.mp3');
+        let file = fs.createWriteStream(`tmp/${ urls[i].artist } — ${ urls[i].title }.mp3`);
 
         let get = https.get(urls[i].url, (res) => {
           res.pipe(file);
